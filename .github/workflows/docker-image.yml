@@ -17,7 +17,7 @@ on:
 
 env:
   APP_NAME: naive
-  DOCKERHUB_REPO: ucatapp/naive
+  DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_USERNAME }}/${{ APP_NAME }}
 
 jobs:
 
@@ -35,6 +35,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Generate App Version
+        run: echo APP_VERSION=`git describe --tags --always` >> $GITHUB_ENV
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
@@ -43,8 +45,12 @@ jobs:
           # builder: ${{ steps.buildx.outputs.name }}
           platforms: linux/arm64, linux/amd64
           push: true
+          build-args: |
+            APP_NAME=${{ env.APP_NAME }}
+            APP_VERSION=${{ env.APP_VERSION }}
           tags: |
             ${{ env.DOCKERHUB_REPO }}:latest
+            ${{ env.DOCKERHUB_REPO }}:${{ env.APP_VERSION }}
           #${{ env.DOCKERHUB_REPO }}:${{ github.event.inputs.tags }}
           # cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/naive:buildcache
           # cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/naive:buildcache,mode=max
