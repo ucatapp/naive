@@ -2,9 +2,12 @@ name: build naive and push
 
 on:
   workflow_dispatch:
-    inputs:
-      tags:
-        description: 'The App version'
+  repository_dispatch:
+    types:
+      - buidldnaive
+    # inputs:
+    #   tags:
+    #     description: 'The App version'
   push:
     tags: # 仅带 tag:v* 时构建
       - v*
@@ -42,7 +45,7 @@ jobs:
           push: true
           tags: |
             ${{ env.DOCKERHUB_REPO }}:latest
-            ${{ env.DOCKERHUB_REPO }}:${{ github.event.inputs.tags }}
+          #${{ env.DOCKERHUB_REPO }}:${{ github.event.inputs.tags }}
           # cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/naive:buildcache
           # cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/naive:buildcache,mode=max
     # - uses: actions/checkout@v3
