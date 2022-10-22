@@ -28,8 +28,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/naive:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/naive:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/naive:buildcache,mode=max
+          #cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/naive:buildcache
+          #cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/naive:buildcache,mode=max
     # - uses: actions/checkout@v3
     #- name: Build the Docker image
     #  run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
