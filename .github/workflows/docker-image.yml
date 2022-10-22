@@ -1,6 +1,7 @@
 name: build naive and push
 
 on:
+  workflow_dispatch:
   push:
     tags: # 仅带 tag:v* 时构建
       - v*
