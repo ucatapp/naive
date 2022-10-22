@@ -17,7 +17,7 @@ on:
 
 env:
   APP_NAME: naive
-  DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_USERNAME }}/${{ APP_NAME }}
+  DOCKERHUB_REPO: ucatapp/naive
 
 jobs:
 
