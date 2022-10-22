@@ -2,12 +2,19 @@ name: build naive and push
 
 on:
   workflow_dispatch:
+    inputs:
+      tags:
+        description: 'The App version'
   push:
     tags: # 仅带 tag:v* 时构建
       - v*
   #   branches: [ "main" ]
   # pull_request:
   #   branches: [ "main" ]
+
+env:
+  APP_NAME: naive
+  DOCKERHUB_REPO: ucatapp/naive
 
 jobs:
 
@@ -33,7 +40,9 @@ jobs:
           # builder: ${{ steps.buildx.outputs.name }}
           platforms: linux/arm64, linux/amd64
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/naive:latest
+          tags: |
+            ${{ env.DOCKERHUB_REPO }}:latest
+            ${{ env.DOCKERHUB_REPO }}:${{ github.event.inputs.tags }}
           # cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/naive:buildcache
           # cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/naive:buildcache,mode=max
     # - uses: actions/checkout@v3
