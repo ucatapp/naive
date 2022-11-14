@@ -8,7 +8,7 @@ RUN go env -w GO111MODULE=auto
 RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
 RUN xcaddy build master --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive \
         --with github.com/imgk/caddy-trojan \
-        --with github.com/mholt/caddy-webdav
+ #        --with github.com/mholt/caddy-webdav
 
 ###
 
